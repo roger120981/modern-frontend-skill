@@ -531,3 +531,113 @@ const child = {
   }
 }
 ```
+
+---
+
+## Premium Design Recipes (2025-2026)
+
+### Bento Grid Layout
+
+```css
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(200px, auto);
+  gap: 16px;
+}
+.bento-grid .featured {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.bento-grid .wide {
+  grid-column: span 2;
+}
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-grid .featured,
+  .bento-grid .wide {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+```
+
+### Noise/Grain Texture Overlay
+
+```css
+.grain-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+```
+
+### Magnetic Button Effect (CSS + JS)
+
+```css
+.btn-magnetic {
+  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+```
+
+```javascript
+document.querySelectorAll('.btn-magnetic').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
+    const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
+    btn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = 'translate(0, 0)';
+  });
+});
+```
+
+### Animated Gradient Mesh Background
+
+```css
+.gradient-mesh {
+  background:
+    radial-gradient(at 40% 20%, rgba(99,102,241,0.15) 0%, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(139,92,246,0.1) 0%, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(59,130,246,0.08) 0%, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(168,85,247,0.06) 0%, transparent 50%),
+    #050510;
+  animation: meshShift 20s ease-in-out infinite alternate;
+}
+@keyframes meshShift {
+  0%   { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
+  100% { background-position: 100% 100%, 0% 100%, 100% 0%, 0% 0%; }
+}
+```
+
+### Spotlight Cursor Effect
+
+```css
+.spotlight-container {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight-container::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+.spotlight-container:hover::after {
+  opacity: 1;
+}
+```

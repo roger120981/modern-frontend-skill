@@ -9,6 +9,19 @@ description: >
   it look modern", "build me a beautiful UI", "create a homepage for my app", "design a pricing
   page", or mentions anything related to frontend design, UI/UX, component architecture, or
   responsive web layouts — even if they don't explicitly say "frontend" or "design".
+version: "1.0.0"
+author: deveshpunjabi
+tags:
+  - frontend
+  - design
+  - ui-ux
+  - landing-page
+  - dashboard
+  - web-design
+  - tailwind
+  - nextjs
+  - react
+  - saas
 ---
 
 # Modern Frontend Design
@@ -16,6 +29,16 @@ description: >
 You are not just writing code. You are a senior frontend developer, a UI/UX designer, a product designer, and a visual design strategist — all at once. Your mission is to transform any user prompt, idea, or product concept into a visually stunning, modern, premium-quality website or web application.
 
 Why this matters: most AI-generated frontends look generic, use dated patterns, and ignore the product context entirely. The result should resemble high-end SaaS products, modern AI tools, and award-winning design websites. A fintech dashboard should feel different from a creator platform. A cybersecurity tool should feel different from a social app. The design must serve the product.
+
+## Design Philosophy — The Premium Standard
+
+The difference between a forgettable UI and a premium one is taste, restraint, and invisible details:
+
+- **Restraint over excess.** Fewer colors, fewer fonts, fewer gimmicks. Every element earns its place. If a gradient doesn't serve the brand, remove it. If a shadow doesn't create hierarchy, it's noise.
+- **Rhythm and proportion.** Professional interfaces feel musical — consistent spacing intervals, proportional font sizes, balanced whitespace. The eye flows smoothly without jarring jumps or cramped sections.
+- **Contextual authenticity.** A fintech dashboard should feel like Bloomberg meets Linear. A creative portfolio should feel like a gallery opening. The design must inhabit its category so completely that users immediately sense "this is a serious product."
+- **Emotional first impression.** Users form opinions within 50 milliseconds. Hero section, color palette, typography weight — all contribute to an instant reaction: "This is trustworthy. This is modern. This is worth my time."
+- **The startup test.** Before delivering, ask: "Would a well-funded startup with a full design team ship this?" If no — iterate.
 
 Follow this 10-step **Atom of Thought Design Process** before and during code generation. Each step builds on the last — skipping steps is how generic UIs happen.
 
@@ -90,6 +113,17 @@ These qualities appear consistently across high-end modern interfaces:
 8. **Earth/globe/planet visuals** — popular in AI/SaaS heroes for a sense of scale and innovation
 
 Use these only as inspiration — adapt them to the product's personality, never copy templates directly.
+
+### 2025–2026 Design Trends to Incorporate
+
+- **Bento grid layouts** — asymmetric grids where cards have different sizes and visual weights, creating editorial-feeling compositions (see: Apple, Linear, Vercel)
+- **Animated gradient meshes** — smooth organic color transitions as backgrounds, replacing flat solid colors
+- **Scroll-driven storytelling** — sections that transform, parallax, or reveal content based on scroll position rather than static page loads
+- **Mono-accent palettes** — one strong accent color used surgically, everything else in neutrals — produces a striking, confident look
+- **Oversized typography heroes** — headline text at 80–120px with tight line-height and negative letter-spacing, creating immediate visual authority
+- **Subtle grain/noise textures** — slight grain overlay on backgrounds adds warmth and tactile quality to flat digital surfaces
+- **Interactive cursor effects** — custom cursors, hover spotlights, magnetic buttons that add a layer of delight
+- **Dark mode by default** — most premium SaaS/AI products now default to dark themes with carefully managed contrast
 
 ---
 
@@ -456,14 +490,32 @@ WHILE errors exist:
 
 Deliver:
 
-- **Modern premium UI** with visual polish and attention to detail
+- **Modern premium UI** with visual polish and attention to detail — the kind of site that makes people say "this looks expensive"
 - **Modular component architecture** — reusable, prop-driven, well-typed
 - **Clean project structure** — /components, /sections, /styles, /utils
 - **Fully responsive design** — beautiful on mobile, tablet, and desktop
 - **Production-ready code** — TypeScript, proper types, clean patterns
 - **Visually impressive layout** that clearly communicates the product's value
+- **Realistic content** — believable copy, realistic data, proper-length text (never lorem ipsum)
+- **Smooth interactions** — hover effects, scroll reveals, micro-animations that feel alive
 
 Include a brief summary of design decisions: color palette rationale, typography choices, layout strategy, and where to customize.
+
+### Cross-Agent Compatibility
+
+This skill works with any AI coding agent that supports Markdown-based skill files:
+
+| Agent | Installation |
+|-------|-------------|
+| Claude Code | `npx skills add deveshpunjabi/modern-frontend-skill` |
+| Cursor | Copy to `.cursor/skills/` |
+| Windsurf | Copy to `.windsurf/skills/` |
+| Cline | Copy to `.cline/skills/` |
+| Codex | Copy to `.codex/skills/` |
+| Aider | Reference in `.aider.conf` |
+| Any agent | Copy SKILL.md to the agent's skill/instruction directory |
+
+The skill is a standalone Markdown file with optional reference documents — no runtime dependencies, no API keys, no build steps.
 
 ---
 
@@ -483,3 +535,17 @@ These are the hallmarks of AI-generated UIs that look "off." Understanding why t
 | **Bootstrap syndrome** | Default template look with swapped colors | Design from scratch using the visual system you defined |
 | **Typography neglect** | Same size/weight for all text elements | Build clear hierarchy: display, heading, subhead, body, caption |
 | **Spacing chaos** | Random margins and padding, no system | Every value from the spacing scale — no arbitrary numbers |
+| **The gray wasteland** | Everything is gray text on gray background | Use contrast deliberately — important content gets high contrast |
+| **Lorem ipsum laziness** | Placeholder text that makes design unjudgeable | Write realistic copy that matches the product's voice and length |
+| **Navbar graveyard** | Navigation with 8+ links crammed in one row | Group into sections, add dropdowns, max 5-6 primary nav items |
+| **The flat page** | No visual rhythm — sections blend into each other | Alternate backgrounds, use dividers, vary section layouts |
+
+### The "Premium or Redo" Test
+
+After building, view the full page and honestly evaluate:
+
+1. **Screenshot test** — Take a screenshot and put it next to Linear.app, Vercel.com, or Stripe.com. Does yours look like it belongs in the same category?
+2. **Squint test** — Squint at the page. Can you see clear visual hierarchy? Are the important elements dominant?
+3. **3-second test** — Show it to someone for 3 seconds. Can they tell what the product does and where to click?
+
+If the answer to any of these is "no" — the design needs work before delivery.

@@ -8,11 +8,23 @@ Thanks for your interest in improving the Modern Frontend Design skill.
 
 The skill lives in `skills/modern-frontend-design/SKILL.md`. When editing:
 
-- Keep the file under 500 lines (currently 369)
+- Keep the file under 500 lines
 - Explain *why* a design principle matters, not just *what* to do
 - Avoid rigid MUST/NEVER rules — explain the reasoning so the agent can
   generalize
 - Test your changes against the eval cases before submitting
+- Keep the YAML frontmatter fields (`name`, `description`, `version`, `author`,
+  `tags`) up to date — these are used by all agent platforms for triggering
+
+### Cross-Agent Compatibility
+
+This skill is designed to work across multiple AI coding agents (Claude Code,
+Cursor, Windsurf, Cline, Codex, Aider, Gemini, and others). When contributing:
+
+- Don't use agent-specific syntax in SKILL.md (no `<claude>` tags, etc.)
+- Keep instructions in standard Markdown
+- Test with at least 2 different agents if possible
+- The YAML frontmatter `tags` field helps agents discover the skill
 
 ### Adding Test Cases
 

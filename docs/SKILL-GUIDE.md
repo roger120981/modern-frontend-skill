@@ -75,12 +75,27 @@ description: >
   What the skill does and when to trigger it. Be specific and slightly
   "pushy" — list concrete phrases and contexts so the agent doesn't
   under-trigger.
+version: "1.0.0"
+author: your-username
+tags:
+  - relevant-tag-1
+  - relevant-tag-2
 ---
 
 # Skill Title
 
 Instructions in Markdown...
 ```
+
+### YAML Frontmatter Fields
+
+| Field | Required | Used By | Purpose |
+|-------|----------|---------|---------|
+| `name` | Yes | All agents | Skill identifier |
+| `description` | Yes | All agents | Trigger matching — when to activate |
+| `version` | Recommended | skills.sh, registries | Semantic versioning |
+| `author` | Recommended | skills.sh, registries | Creator attribution |
+| `tags` | Recommended | Discovery, search | Keywords for finding the skill |
 
 ### Directory Structure
 
@@ -96,3 +111,21 @@ skill-name/
 └── evals/                # Recommended — test cases
     └── evals.json
 ```
+
+## Cross-Agent Compatibility
+
+This skill format is compatible with all major AI coding agents:
+
+| Agent | Skill Location | Trigger Mechanism |
+|-------|---------------|-------------------|
+| Claude Code | `npx skills add` or `.claude/skills/` | YAML description matching |
+| Cursor | `.cursor/skills/` | YAML description matching |
+| Windsurf | `.windsurf/skills/` | YAML description matching |
+| Cline | `.cline/skills/` | YAML description matching |
+| Codex | `.codex/skills/` or `.agents/skills/` | Instruction file loading |
+| Aider | Referenced in `.aider.conf` | Direct file reference |
+| Gemini | Agent instruction directory | Instruction file loading |
+
+The skill uses standard Markdown with YAML frontmatter — no proprietary
+syntax, no agent-specific tags. Any agent that can read Markdown instruction
+files can use this skill.

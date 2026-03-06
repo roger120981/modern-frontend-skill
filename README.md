@@ -49,6 +49,34 @@ npx skills add deveshpunjabi/modern-frontend-skill
 Copy the `skills/modern-frontend-design/` folder into your project's
 `.cursor/skills/` directory.
 
+### Windsurf
+
+Copy the `skills/modern-frontend-design/` folder into your project's
+`.windsurf/skills/` directory.
+
+### Cline
+
+Copy the `skills/modern-frontend-design/` folder into your project's
+`.cline/skills/` directory.
+
+### Codex / OpenAI Agents
+
+Copy `skills/modern-frontend-design/SKILL.md` into your project's
+`.codex/skills/` or `.agents/skills/` directory.
+
+### Aider
+
+Add to your `.aider.conf`:
+```
+read: path/to/skills/modern-frontend-design/SKILL.md
+```
+
+### Gemini / Other Agents
+
+Copy `skills/modern-frontend-design/SKILL.md` into your agent's
+instruction or skill directory. The skill is agent-agnostic Markdown —
+it works with any LLM-based coding agent that reads instruction files.
+
 ### Manual (Any Agent)
 
 Copy `skills/modern-frontend-design/SKILL.md` into your agent's skills
