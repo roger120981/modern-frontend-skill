@@ -1,62 +1,53 @@
-# Examples
+# Example Prompts — 2026 Edition
 
-Real-world example prompts and the expected outputs when using the **modern-frontend-design** skill. These cover the most common project types an agent will encounter.
+These prompts are calibrated to trigger the 2026 modern-frontend-design skill correctly.
+Each includes niche context, stack, and key 2026 requirements.
 
-## Landing Pages
+## Prompts by Category
 
-### AI SaaS Product (InkFlow)
-**Prompt:** *"Build a landing page for an AI writing assistant called InkFlow with a dark theme, hero with demo preview, features showing different writing modes, 3-tier pricing, and testimonials. Use Next.js and Tailwind."*
-
-**Expected:** Next.js + Tailwind dark-themed landing page with cohesive blue/purple palette, display-size hero typography with demo preview, social proof logos, feature grid, glassmorphism pricing cards (Free/Standard/Pro) with highlighted recommended tier, testimonial section, and responsive design.
-
-### AI Customer Support (Orbita AI)
-**Prompt:** *"Landing page for Orbita AI — 24/7 multilingual chat support for global teams. Hero with 'Always-On AI Support for a Global Customer Base', trusted-by logos (Atlassian, Microsoft, Notion, Shopify, Slack), 3 benefit cards, 4-step 'how it works', final CTA. Dark theme, green accents. React + Tailwind."*
-
-**Expected:** Premium dark-themed landing page with green accent system, hero with globe/earth visual, logo bar, 3 benefit cards with icons, numbered 4-step process section, and strong final CTA. Resembles modern AI SaaS marketing pages.
-
-### Developer Tool
-**Prompt:** *"Create a homepage for a CLI tool that helps developers manage Docker containers. Minimal, dev-focused."*
-
-**Expected:** High-contrast dark theme with monospace accents, terminal-style hero with code snippet demo, feature comparison section, one-line install CTA, and developer-focused copy.
-
----
-
-## Dashboards
+### AI SaaS Landing Page
+"Build a cinematic landing page for 'Lumina AI' — an AI writing assistant.
+Dark theme, OKLCH indigo palette, video background hero with grain overlay,
+native CSS scroll-driven animations (animation-timeline: view()), liquid glass
+components, bento feature grid, and glassmorphism pricing. Next.js 15 + Tailwind."
 
 ### Fintech Dashboard
-**Prompt:** *"Build a dashboard for my fintech startup — expense tracking for small businesses. Main view: total spend, budget remaining, spend-by-category charts. Sidebar nav, transactions table with filters, top bar with search and profile. Clean and professional."*
+"Build a professional expense dashboard for 'Clearpath'. Light mode, OKLCH
+professional blue. Sidebar with Container scroll-state sticky shadow, 4 KPI cards
+with semantic trend colors, area chart, filterable transactions table, skeleton
+loaders. Use @starting-style for any entering drawers. Next.js 15."
 
-**Expected:** Professional sidebar dashboard with icon+label nav, top bar (search + avatar), metric summary cards with trend arrows, category spend chart (donut/bar), filterable transactions table with realistic financial data, loading skeletons, and responsive layout.
+### Developer Tool Hero
+"Build a hero section for 'Axiom' — developer observability. Dark green OKLCH
+terminal aesthetic, monospace font, terminal block with staggered line reveal
+using sibling-index() CSS. @starting-style on terminal block enter. React + Tailwind."
 
-### Analytics Dashboard
-**Prompt:** *"Analytics dashboard for a social media scheduling app. Show post performance, engagement metrics, and a calendar view."*
+### Creative Agency (Neo-Brutalism)
+"Build an Awwwards-quality hero for 'Forma Studio' design agency. Neo-brutalism:
+warm dark OKLCH (copper primary), zero border radius, oversized mixed-weight serif
+type (80px+), GSAP character reveal, ScrollTrigger parallax, custom cursor.
+Grain texture. Asymmetric layout. React + GSAP."
 
-**Expected:** Clean SaaS dashboard with top nav, metric cards (impressions, clicks, engagement rate), line/bar charts for trends, calendar grid with scheduled posts, and proper empty states.
+### Wellness App
+"Build a wellness app hero for 'Bloom'. Soft sage OKLCH palette, light mode,
+organic blob backgrounds (CSS radial-gradient with blur, CSS animation), phone
+mockup right column, native scroll reveals (animation-timeline: view()). Framer Motion."
 
----
+### SaaS Pricing Page
+"Build a pricing page for 'Forma AI'. Three tiers: Free/Pro($29 or $24 yearly)/
+Enterprise. OKLCH dark bg, liquid-glass cards, Framer layoutId price toggle animation,
+AnimatePresence savings badge, FAQ accordion with @starting-style expand. React."
 
-## Pricing Pages
+## Expected Behaviors from Skill v3.0
 
-### SaaS Pricing (Forma AI)
-**Prompt:** *"Pricing page for Forma AI design tool. Three plans: Free ($0), Standard ($9.99/m), Pro ($19.99/m) with monthly/yearly toggle. Dark background, glassmorphism cards. Each card lists specific features with checkmarks."*
+When these prompts are processed by an agent using this skill, the agent should:
 
-**Expected:** Standalone pricing page with dark gradient background, 3 glassmorphism pricing cards, monthly/yearly toggle, feature checklists, prominent price typography, highlighted recommended tier, and 'Choose Plan' CTAs. Responsive — cards stack on mobile.
-
----
-
-## Portfolios & Personal Sites
-
-### Designer Portfolio
-**Prompt:** *"Portfolio for freelance UI/UX designer Aria Chen. Project gallery grid, about section, contact form, blog listing. Bold typography, scroll animations. HTML/CSS/JS only. Warm colors, dark background."*
-
-**Expected:** Single-page or multi-page site with display typography, scroll-triggered animations (Intersection Observer), gallery grid with hover effects, about section with personality, working contact form, blog listing, and warm copper/gold palette on dark background.
-
----
-
-## How to Use These Examples
-
-1. Load the skill into your agent (see installation instructions in README)
-2. Copy any prompt above and paste it as your request
-3. Compare the output against the expected result
-4. The output should follow the 10-step Atom of Thought process and match the design quality described
-5. If the output looks generic or template-like, the skill needs tuning
+1. **Define OKLCH :root tokens first** — before any component code
+2. **Add .liquid-glass utility** — in globals.css
+3. **Use animation-timeline: view()** — for scroll reveals, not Intersection Observer
+4. **Add @starting-style** — on every entering element (modal, drawer, toast)
+5. **Include @view-transition** — for page navigation
+6. **Add grain texture** — body::after with SVG filter
+7. **Specify per-element animation timing** — delay + duration + easing for each
+8. **Write realistic copy** — not lorem ipsum
+9. **Pass token audit** — zero hex values in DevTools

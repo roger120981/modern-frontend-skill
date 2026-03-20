@@ -1,194 +1,486 @@
-# Design System Quick Reference
+# Design System Quick Reference — 2026 Edition
 
-Detailed reference guide for building consistent, premium design systems. Consult this
-when establishing design foundations in Step 3 of the Atom of Thought process.
-
-## Table of Contents
-
-1. [Typography Systems](#typography-systems)
-2. [Color Palette Construction](#color-palette-construction)
-3. [Gradient and Glow Recipes](#gradient-and-glow-recipes)
-4. [Glassmorphism Recipes](#glassmorphism-recipes)
-5. [Spacing Scales](#spacing-scales)
-6. [Shadow Systems](#shadow-systems)
-7. [Border Radius Languages](#border-radius-languages)
-8. [Responsive Breakpoints](#responsive-breakpoints)
-9. [Animation Patterns](#animation-patterns)
+Complete reference for building token-based, OKLCH-powered, Liquid-Glass design systems.
+Use during Step 3 of the Atom of Thought process and as a CSS copy-paste library.
 
 ---
 
-## Typography Systems
+## 1. OKLCH Color System (2026 Standard)
 
-### Recommended Font Pairings
+OKLCH is now the mandatory color format. Advantages over HSL:
+- **Perceptual uniformity:** equal lightness values look equally bright across all hues
+- **Relative colors:** `oklch(from var(--primary) calc(l + 0.2) c h)`
+- **Better gradients:** no hue shifts between stops
+- **Wide gamut:** accesses P3 colors not possible with HSL
+
+### OKLCH Quick Reference
+
+```
+oklch(L C H)
+L = lightness 0%–100% (perceptually uniform)
+C = chroma    0–0.4    (0 = gray, 0.4 = max vivid)
+H = hue       0–360    (same as HSL hue)
+```
+
+### Complete Token Blueprints
+
+**Dark — AI/SaaS (Indigo Primary):**
+```css
+:root {
+  --bg:          oklch(8%  0.020 265);
+  --surface:     oklch(12% 0.020 265);
+  --surface-up:  oklch(16% 0.020 265);
+  --fg:          oklch(96% 0.010 95);
+  --fg-muted:    oklch(65% 0.010 265);
+  --fg-dim:      oklch(45% 0.010 265);
+  --primary:     oklch(62% 0.210 285);   /* vivid indigo */
+  --primary-up:  oklch(68% 0.210 285);
+  --ok:          oklch(62% 0.180 155);
+  --warn:        oklch(75% 0.190 65);
+  --err:         oklch(62% 0.220 25);
+  --border:      oklch(22% 0.015 265);
+  --border-faint:oklch(15% 0.010 265);
+}
+```
+
+**Dark — Developer/Terminal (Green Primary):**
+```css
+:root {
+  --bg:       oklch(7%  0.015 155);
+  --surface:  oklch(11% 0.015 155);
+  --fg:       oklch(94% 0.008 120);
+  --primary:  oklch(68% 0.200 155);   /* terminal green */
+}
+```
+
+**Dark — Agency/Creative (Warm Copper):**
+```css
+:root {
+  --bg:       oklch(9%  0.018 50);
+  --surface:  oklch(13% 0.018 50);
+  --fg:       oklch(95% 0.008 80);
+  --primary:  oklch(65% 0.160 55);   /* warm copper/amber */
+}
+```
+
+**Light — Fintech (Professional Blue):**
+```css
+:root {
+  --bg:       oklch(98% 0.005 265);
+  --surface:  oklch(100% 0 0);
+  --fg:       oklch(18% 0.030 265);
+  --fg-muted: oklch(52% 0.015 265);
+  --primary:  oklch(48% 0.190 265);  /* deep professional blue */
+  --ok:       oklch(48% 0.180 155);
+  --err:      oklch(52% 0.220 25);
+  --border:   oklch(88% 0.010 265);
+}
+```
+
+**Light — Wellness/Organic (Sage Green):**
+```css
+:root {
+  --bg:       oklch(97% 0.008 155);
+  --surface:  oklch(100% 0 0);
+  --fg:       oklch(22% 0.020 155);
+  --fg-muted: oklch(55% 0.012 155);
+  --primary:  oklch(52% 0.140 155);  /* sage green */
+  --accent:   oklch(72% 0.130 60);   /* warm peach */
+  --border:   oklch(86% 0.010 155);
+}
+```
+
+### Relative Colors & Color-Mix (2026)
+
+```css
+/* Lighten/darken primary without extra tokens */
+--primary-light: oklch(from var(--primary) calc(l + 0.20) c h);
+--primary-dim:   oklch(from var(--primary) calc(l - 0.15) c h);
+
+/* Mix colors */
+--primary-tint: color-mix(in oklch, var(--primary) 12%, var(--bg));
+--glow-color:   color-mix(in oklch, var(--primary) 30%, transparent);
+
+/* Alpha variant — use / for opacity */
+--primary-10: oklch(from var(--primary) l c h / 0.10);
+--primary-20: oklch(from var(--primary) l c h / 0.20);
+```
+
+### Dopamine Palette (Lifestyle / Youth Brands)
+
+```css
+/* High-energy, vivid — Y2K inspired, vibrant */
+--dopamine-pink:    oklch(72% 0.280 345);
+--dopamine-orange:  oklch(75% 0.250 45);
+--dopamine-yellow:  oklch(88% 0.200 95);
+--dopamine-green:   oklch(72% 0.240 155);
+--dopamine-blue:    oklch(65% 0.240 255);
+/* Use on: lifestyle brands, beauty, youth apps, social */
+/* Never on: fintech, healthcare, enterprise */
+```
+
+---
+
+## 2. Typography Systems — 2026
+
+### Font Pairings
 
 | Heading | Body | Vibe | Best For |
 |---------|------|------|----------|
-| Inter | Inter | Clean, neutral, Swiss-style | Most versatile — works everywhere |
-| Cal Sans | Inter | SaaS, modern product | SaaS landing pages, dashboards |
-| Space Grotesk | DM Sans | Tech, developer tools | Dev tools, API products |
-| Playfair Display | Source Sans 3 | Editorial, luxury | Agencies, luxury brands, portfolios |
-| Sora | Nunito Sans | Friendly, approachable | Education, health, consumer apps |
-| JetBrains Mono | Inter | Developer, terminal | CLI tools, code-heavy products |
-| Clash Display | Satoshi | Bold, creative, startup | Creative agencies, bold startups |
-| Manrope | Inter | Geometric, modern | AI products, modern SaaS |
-| Cabinet Grotesk | General Sans | Bold, contemporary | Startup landing pages |
+| Inter (variable) | Inter | AI Minimalism | AI tools, Perplexity-style SaaS |
+| Geist Sans | Geist Mono | Developer-grade | Dev tools, CLIs, code products |
+| Cabinet Grotesk | Satoshi | Bold startup | Landing pages, startup SaaS |
+| Clash Display | General Sans | Kinetic editorial | Portfolios, creative agencies |
+| Space Grotesk | DM Sans | Geometric tech | API products, fintech |
+| Playfair Display | Satoshi | Luxury editorial | Agencies, luxury brands |
+| JetBrains Mono | Inter | Technical mono | Dev tools, terminal aesthetic |
+| Sora | Nunito Sans | Friendly | Wellness, education, consumer |
 
-### Type Scale (1.250 — Major Third)
+### Type Scale (Major Third, 1.250)
 
-| Level | Size | Weight | Line Height | Letter Spacing | Usage |
-|-------|------|--------|-------------|----------------|-------|
-| Display | 72px / 4.5rem | 700-800 | 1.1 | -0.04em | Hero headlines |
-| H1 | 48px / 3rem | 700 | 1.2 | -0.03em | Page titles |
-| H2 | 36px / 2.25rem | 600-700 | 1.25 | -0.02em | Section headings |
-| H3 | 24px / 1.5rem | 600 | 1.3 | -0.01em | Card titles, subsections |
-| H4 | 20px / 1.25rem | 600 | 1.4 | 0 | Small headings, labels |
-| Body | 16-18px / 1rem | 400 | 1.6 | 0 | Paragraphs, descriptions |
-| Small | 14px / 0.875rem | 400 | 1.5 | 0.01em | Secondary text, captions |
-| Caption | 12px / 0.75rem | 500 | 1.4 | 0.02em | Labels, badges, metadata |
+| Level | Size | Weight | Line Height | Tracking | Use |
+|-------|------|--------|-------------|----------|-----|
+| Display | clamp(3rem, 1rem+5vw, 7rem) | 800 | 0.92 | -0.045em | Hero headlines |
+| H1 | clamp(2.25rem, 1rem+3vw, 4rem) | 700 | 1.05 | -0.030em | Page titles |
+| H2 | clamp(1.75rem, 1rem+2vw, 2.75rem) | 650 | 1.15 | -0.020em | Section heads |
+| H3 | clamp(1.25rem, 1rem+1vw, 1.75rem) | 600 | 1.25 | -0.010em | Card titles |
+| Body | 16–18px | 400 | 1.65 | 0 | Paragraphs |
+| Small | 14px | 400 | 1.55 | +0.010em | Secondary |
+| Caption | 12px | 500 | 1.45 | +0.020em | Labels, badges |
 
-### Fluid Typography with clamp()
+### Variable Font Axes
 
 ```css
-/* Scales smoothly between mobile and desktop sizes */
-.display { font-size: clamp(2rem, 1rem + 3.76vw, 4.5rem); }
-.h1      { font-size: clamp(1.75rem, 1rem + 2.5vw, 3rem); }
-.h2      { font-size: clamp(1.5rem, 1rem + 1.67vw, 2.25rem); }
-.h3      { font-size: clamp(1.25rem, 1rem + 0.83vw, 1.5rem); }
+/* Inter Variable — precise weight control */
+.headline {
+  font-family: 'Inter', sans-serif;
+  font-variation-settings: 'wght' 820;  /* between 800-900 */
+  font-optical-sizing: auto;
+}
+
+/* Cabinet Grotesk with tighter optical size */
+.display {
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-variation-settings: 'wght' 800;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'ss01' 1;
+}
 ```
 
-### Typography Best Practices
+### Kinetic Typography (2026 Trend)
 
-- Use negative letter-spacing on display/h1/h2 — this is what makes headings feel "designed"
-- Max line width for readability: `max-width: 65ch` for body text
-- Use `font-feature-settings: 'kern' 1, 'liga' 1` for professional kerning
-- Mix weights within a heading for emphasis: "Build Faster With **Lumine** *Insights*"
-- Italic accent words in heroes create visual interest without adding color
+```css
+/* Scroll-responsive headline */
+.kinetic-headline {
+  animation: text-reveal linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+@keyframes text-reveal {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); }
+  to   { opacity: 1; clip-path: inset(0 0% 0 0); }
+}
+
+/* Cursor-responsive headline (JS required) */
+.magnetic-text {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+```
 
 ---
 
-## Color Palette Construction
+## 3. Liquid Glass System — 2026
 
-### Neutral Scale (11 stops)
+### Dark Theme (Standard)
 
-```
-50  — page backgrounds, subtle fills, light mode base
-100 — alternate row backgrounds, hover states (light mode)
-200 — borders, dividers, input outlines
-300 — disabled states, subtle decorative elements
-400 — placeholder text, muted icons
-500 — secondary text, inactive nav items
-600 — body text (dark mode primary text)
-700 — headings, primary text (light mode)
-800 — high-emphasis text, active states
-900 — near-black, dark mode card backgrounds
-950 — darkest backgrounds, dark mode page base
-```
-
-### Semantic Color Tokens
-
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| primary | 600 | 400 | CTAs, links, active states |
-| primary-hover | 700 | 300 | Hover on primary elements |
-| primary-subtle | 50 | 950 | Tinted backgrounds, badges |
-| success | green-600 | green-400 | Positive actions, confirmations, growth indicators |
-| warning | amber-600 | amber-400 | Caution states, attention needed |
-| error | red-600 | red-400 | Errors, destructive actions, decline indicators |
-| info | blue-600 | blue-400 | Informational elements, tips |
-
-### Niche-Specific Palettes
-
-**AI / SaaS Dark Theme**
 ```css
---bg-primary: #050510;      /* Near-black with blue undertone */
---bg-secondary: #0a0a1a;    /* Slightly elevated surface */
---bg-card: #0f0f23;         /* Card backgrounds */
---accent-primary: #6366f1;  /* Indigo for CTAs */
---accent-secondary: #8b5cf6;/* Purple for gradients */
---accent-glow: rgba(99, 102, 241, 0.15); /* Glow effects */
---text-primary: #f1f5f9;    /* Primary text */
---text-secondary: #94a3b8;  /* Muted text */
---border: rgba(255, 255, 255, 0.08); /* Subtle borders */
+.liquid-glass {
+  background: linear-gradient(
+    135deg,
+    oklch(100% 0 0 / 0.08) 0%,
+    oklch(100% 0 0 / 0.02) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid oklch(100% 0 0 / 0.12);
+  box-shadow:
+    inset 0 1px 0 oklch(100% 0 0 / 0.15),
+    inset 0 -1px 0 oklch(0% 0 0 / 0.08),
+    0 8px 32px oklch(0% 0 0 / 0.30),
+    0 0 0 1px oklch(100% 0 0 / 0.04);
+  border-radius: var(--r);
+  transition: border-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+.liquid-glass:hover {
+  border-color: oklch(100% 0 0 / 0.18);
+  box-shadow:
+    inset 0 1px 0 oklch(100% 0 0 / 0.20),
+    0 12px 40px oklch(0% 0 0 / 0.35),
+    0 0 0 1px oklch(100% 0 0 / 0.06);
+}
 ```
 
-**Agency / Creative (Warm Dark)**
+### Light Theme
+
 ```css
---bg-primary: #0a0806;      /* Warm near-black */
---bg-secondary: #1a1410;    /* Warm dark brown */
---bg-card: #1f1a14;         /* Card with warmth */
---accent-primary: #d4956a;  /* Copper/terracotta */
---accent-secondary: #e8c49a;/* Gold/champagne */
---text-primary: #faf5f0;    /* Warm white */
---text-secondary: #a89888;  /* Warm gray */
---border: rgba(212, 149, 106, 0.15); /* Warm border */
+.liquid-glass-light {
+  background: oklch(100% 0 0 / 0.82);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid oklch(0% 0 0 / 0.07);
+  box-shadow:
+    0 1px 3px oklch(0% 0 0 / 0.05),
+    0 8px 24px oklch(0% 0 0 / 0.04),
+    inset 0 1px 0 oklch(100% 0 0 / 0.95);
+}
 ```
 
-**Fintech (Professional Light)**
+### Warm Agency Tint
+
 ```css
---bg-primary: #ffffff;
---bg-secondary: #f8fafc;
---bg-card: #ffffff;
---accent-primary: #2563eb;  /* Professional blue */
---accent-secondary: #1e40af;
---accent-success: #16a34a;  /* Green for positive trends */
---accent-error: #dc2626;    /* Red for negative trends */
---text-primary: #0f172a;
---text-secondary: #64748b;
---border: #e2e8f0;
+.liquid-glass-warm {
+  background: linear-gradient(
+    135deg,
+    oklch(85% 0.08 55 / 0.08) 0%,
+    oklch(85% 0.08 55 / 0.01) 100%
+  );
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid oklch(85% 0.08 55 / 0.14);
+  box-shadow: inset 0 1px 0 oklch(85% 0.08 55 / 0.12), 0 8px 32px oklch(0% 0 0 / 0.40);
+}
 ```
 
-**AI Support / Tech (Dark + Green)**
-```css
---bg-primary: #030712;      /* Deep dark */
---bg-secondary: #0a1628;    /* Dark blue-tinged */
---bg-card: #0f1d32;
---accent-primary: #22c55e;  /* Green for trust/go */
---accent-secondary: #10b981;/* Emerald variant */
---accent-glow: rgba(34, 197, 94, 0.12);
---text-primary: #f0fdf4;    /* Slightly green-tinted white */
---text-secondary: #86efac;  /* Light green muted */
---border: rgba(34, 197, 94, 0.1);
+### Tailwind Shorthand
+
+```html
+<!-- Dark liquid glass -->
+<div class="bg-white/5 backdrop-blur-2xl saturate-150 border border-white/10
+            shadow-[inset_0_1px_0_oklch(100%_0_0/0.15),0_8px_32px_oklch(0%_0_0/0.3)]
+            rounded-xl hover:border-white/[0.18] transition-all duration-250">
+
+<!-- Featured/accent card -->
+<div class="backdrop-blur-2xl saturate-150 rounded-2xl
+            [background:linear-gradient(135deg,oklch(62%_0.21_285/0.10),oklch(62%_0.21_285/0.03))]
+            [border:1px_solid_oklch(62%_0.21_285/0.22)]
+            [box-shadow:0_0_32px_oklch(62%_0.21_285/0.15)]">
 ```
-
-### Dark Mode Rules
-
-- Never use pure black (#000000) — always add a subtle color undertone
-- Reduce primary color saturation by 10-20% to prevent eye strain
-- Elevate surface layers with slightly lighter backgrounds, not stronger shadows
-- Card backgrounds should be 1-2 steps lighter than the page background
-- Ensure minimum 4.5:1 contrast ratio for body text, 3:1 for large display text
-- Use opacity-based borders (rgba white) not solid color borders
 
 ---
 
-## Gradient and Glow Recipes
+## 4. 2026 CSS Native Features
 
-### Hero Background Gradients
+### Scroll-Driven Animations
 
 ```css
-/* Deep space — AI/SaaS products */
-background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.15) 0%, transparent 60%),
-            radial-gradient(ellipse at 80% 50%, rgba(139,92,246,0.08) 0%, transparent 50%),
-            #050510;
+/* Viewport reveal — replaces Intersection Observer */
+.section-reveal {
+  animation: fade-up linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 30%;
+}
 
-/* Warm agency — creative/portfolio */
-background: radial-gradient(ellipse at 30% 20%, rgba(212,149,106,0.12) 0%, transparent 50%),
-            radial-gradient(ellipse at 70% 80%, rgba(232,196,154,0.06) 0%, transparent 50%),
-            #0a0806;
+/* Full-page scroll progress bar */
+.progress { animation: shrink-x linear; animation-timeline: scroll(root); }
+@keyframes shrink-x { to { transform: scaleX(1); } }
 
-/* Tech emerald — fintech/support */
-background: radial-gradient(ellipse at 50% 30%, rgba(34,197,94,0.08) 0%, transparent 50%),
-            linear-gradient(180deg, #030712 0%, #0a1628 100%);
+/* Sticky header shadow on scroll */
+@container scroll-state(stuck) {
+  .sticky-nav { box-shadow: 0 2px 20px oklch(0% 0 0 / 0.15); }
+}
+
+/* Parallax layer */
+.hero-bg {
+  animation: parallax linear;
+  animation-timeline: scroll(root block);
+  animation-range: 0% 100%;
+}
+@keyframes parallax { to { transform: translateY(-80px); } }
 ```
 
-### Gradient Text
+### `@starting-style` — Flash-Free Enters (Baseline 2025)
+
+```css
+/* Modal enter */
+.modal { opacity: 1; transform: scale(1); transition: opacity 200ms, transform 200ms; }
+@starting-style { .modal { opacity: 0; transform: scale(0.95); } }
+
+/* Toast / notification */
+.toast { opacity: 1; transform: translateY(0); transition: all 300ms; }
+@starting-style { .toast { opacity: 0; transform: translateY(16px); } }
+
+/* Dropdown */
+.dropdown { opacity: 1; transform: translateY(0) scaleY(1); transform-origin: top; transition: all 200ms; }
+@starting-style { .dropdown { opacity: 0; transform: translateY(-8px) scaleY(0.96); } }
+```
+
+### CSS Anchor Positioning (Baseline 2025+)
+
+```css
+/* Tooltip that repositions automatically */
+.trigger   { anchor-name: --tip-trigger; }
+.tooltip   {
+  position: fixed;
+  position-anchor: --tip-trigger;
+  inset-area: top;
+  margin-bottom: 8px;
+  position-try-fallbacks: --bottom, --left, --right;
+  max-width: 200px;
+}
+@position-try --bottom { inset-area: bottom; margin-bottom: 0; margin-top: 8px; }
+@position-try --left   { inset-area: left;   margin-bottom: 0; margin-right: 8px; }
+@position-try --right  { inset-area: right;  margin-bottom: 0; margin-left: 8px;  }
+```
+
+### `sibling-index()` — CSS Stagger (Chrome 2026)
+
+```css
+/* Staggered animations without JavaScript */
+.stagger-item {
+  animation: fade-up var(--dur-slow) var(--ease-expo) both;
+  animation-delay: calc(sibling-index() * 60ms);
+  animation-timeline: view();
+  animation-range: entry 0% cover 30%;
+}
+```
+
+### View Transitions API
+
+```css
+/* Cross-document — 2 lines */
+@view-transition { navigation: auto; }
+
+/* Element-level morph */
+.hero-image { view-transition-name: hero-image; }
+.detail-image { view-transition-name: hero-image; } /* same name = morph */
+
+/* Custom transition timing */
+::view-transition-old(root) { animation-duration: 400ms; animation-timing-function: ease-in; }
+::view-transition-new(root) { animation-duration: 400ms; animation-timing-function: ease-out; }
+```
+
+### CSS `if()` — Adaptive Styles (2026)
+
+```css
+/* Conditional transition duration */
+.animated {
+  transition-duration: if(
+    media(prefers-reduced-motion: reduce): 0ms;
+    else: var(--dur-base)
+  );
+}
+
+/* Conditional size */
+.btn {
+  padding: if(
+    container(min-width >= 640px): 0.75rem 1.5rem;
+    else: 0.5rem 1rem
+  );
+}
+```
+
+### CSS Grid Lanes / Masonry (Baseline 2026)
+
+```css
+/* Native masonry — no JS library */
+.masonry {
+  display: grid-lanes;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* Traditional masonry (Safari + Chrome) */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: masonry;
+  gap: 1rem;
+}
+```
+
+---
+
+## 5. Neo-Brutalism Recipes (2026)
+
+Use for: agencies, creative portfolios, subculture brands — NOT for fintech or enterprise.
+
+```css
+/* Neo-brutalist card */
+.brutal-card {
+  background: oklch(97% 0.005 90);  /* near-white warm */
+  border: 2px solid oklch(10% 0.01 0);  /* stark black border */
+  box-shadow: 4px 4px 0 oklch(10% 0.01 0);  /* offset shadow — no blur */
+  border-radius: 0;  /* no radius — intentional */
+  transition: transform 100ms ease, box-shadow 100ms ease;
+}
+.brutal-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 oklch(10% 0.01 0);
+}
+
+/* Neo-brutalist button */
+.brutal-btn {
+  background: oklch(85% 0.25 85);   /* bold yellow */
+  border: 2px solid oklch(10% 0 0);
+  box-shadow: 3px 3px 0 oklch(10% 0 0);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0;
+}
+```
+
+---
+
+## 6. Gradient & Glow Recipes
+
+### OKLCH Gradient Text
 
 ```css
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #6366f1 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    oklch(from var(--primary) l c calc(h + 40)) 50%,
+    oklch(from var(--primary) l c calc(h + 80)) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+```
+
+### Hero Background Recipes
+
+```css
+/* Deep space AI/SaaS */
+.hero-ai {
+  background:
+    radial-gradient(ellipse at 50% 0%, oklch(62% 0.21 285 / 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 70%, oklch(62% 0.21 285 / 0.06) 0%, transparent 50%),
+    var(--bg);
+}
+
+/* Warm agency */
+.hero-agency {
+  background:
+    radial-gradient(ellipse at 25% 20%, oklch(65% 0.16 55 / 0.10) 0%, transparent 50%),
+    var(--bg);
+}
+
+/* Developer terminal */
+.hero-dev {
+  background:
+    radial-gradient(ellipse at 50% 30%, oklch(68% 0.20 155 / 0.07) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, oklch(10% 0.015 155) 100%);
+}
+
+/* Animated mesh gradient */
+.mesh-bg {
+  background:
+    radial-gradient(at 40% 20%, oklch(62% 0.21 285 / 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, oklch(65% 0.18 305 / 0.10) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, oklch(55% 0.20 250 / 0.08) 0px, transparent 50%),
+    var(--bg);
+  animation: mesh-shift 20s ease-in-out infinite alternate;
 }
 ```
 
@@ -197,736 +489,62 @@ background: radial-gradient(ellipse at 50% 30%, rgba(34,197,94,0.08) 0%, transpa
 ```css
 /* Button glow */
 .btn-glow {
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3),
-              0 0 40px rgba(99, 102, 241, 0.1);
-}
-.btn-glow:hover {
-  box-shadow: 0 0 30px rgba(99, 102, 241, 0.4),
-              0 0 60px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 24px oklch(from var(--primary) l c h / 0.40),
+              0 0 48px oklch(from var(--primary) l c h / 0.15);
 }
 
-/* Card edge glow */
-.card-glow {
-  position: relative;
-}
-.card-glow::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(99,102,241,0.3), transparent 50%);
-  z-index: -1;
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  padding: 1px;
+/* Card edge glow (featured pricing) */
+.card-featured {
+  box-shadow:
+    0 0 30px oklch(from var(--primary) l c h / 0.20),
+    0 8px 32px oklch(0% 0 0 / 0.25);
+  border-color: oklch(from var(--primary) l c h / 0.30);
 }
 ```
 
 ---
 
-## Glassmorphism Recipes
-
-### Standard Glass Card
+## 7. Grain / Noise Texture
 
 ```css
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-}
-```
-
-### Highlighted Glass Card (Pricing "Recommended" Tier)
-
-```css
-.glass-card-featured {
-  background: rgba(99, 102, 241, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 0 30px rgba(99, 102, 241, 0.1),
-              0 8px 32px rgba(0, 0, 0, 0.2);
-}
-```
-
-### Tailwind Glassmorphism Classes
-
-```html
-<!-- Standard glass card -->
-<div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-
-<!-- Featured glass card -->
-<div class="bg-indigo-500/10 backdrop-blur-xl border border-indigo-500/20 rounded-2xl p-8
-            shadow-[0_0_30px_rgba(99,102,241,0.1)]">
-```
-
----
-
-## Spacing Scales
-
-### 4px Base Scale
-
-```
-4   (1)   — tight internal gaps (icon-to-label inside buttons)
-8   (2)   — compact spacing (inline elements, icon gaps)
-12  (3)   — default internal padding (buttons, badges, chips)
-16  (4)   — standard content gap (form fields, list items)
-20  (5)   — comfortable spacing (between related elements)
-24  (6)   — section internal padding (card content, grouped items)
-32  (8)   — content block separation (between card groups)
-40  (10)  — medium separation (between subsections)
-48  (12)  — large content blocks (between major subsections)
-64  (16)  — section padding on mobile
-80  (20)  — section padding on tablet
-96  (24)  — section padding on desktop (standard)
-128 (32)  — hero/feature section padding on desktop (generous)
-```
-
-### Spacing Application Guide
-
-| Element | Mobile | Tablet | Desktop |
-|---------|--------|--------|---------|
-| Section vertical padding | 48-64px | 64-80px | 80-128px |
-| Card internal padding | 20-24px | 24-32px | 32-40px |
-| Grid gap | 16px | 20-24px | 24-32px |
-| Content max-width | 100% | 100% | 1200-1440px |
-| Side padding | 16-20px | 24-32px | 32-48px |
-| Hero vertical padding | 80px | 96px | 128px |
-| Between heading and body | 12-16px | 16px | 16-20px |
-| Between section heading and content | 32-40px | 40-48px | 48-64px |
-
----
-
-## Shadow Systems
-
-### Three-Level Hierarchy
-
-```css
-/* Level 1: Cards, subtle elevation */
---shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04),
-             0 1px 2px rgba(0, 0, 0, 0.06);
-
-/* Level 2: Dropdowns, popovers, floating elements */
---shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04),
-             0 2px 4px rgba(0, 0, 0, 0.06);
-
-/* Level 3: Modals, dialogs, overlay panels */
---shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.04),
-             0 4px 6px rgba(0, 0, 0, 0.05);
-
-/* Level 4: Heavy emphasis elements (optional) */
---shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.06),
-             0 8px 10px rgba(0, 0, 0, 0.04);
-```
-
-### Colored Shadows (Premium Feel)
-
-```css
-/* Tint shadows with the primary color for polish */
---shadow-primary: 0 4px 14px rgba(99, 102, 241, 0.15);
-
-/* Card with primary tint */
---shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04),
-               0 4px 16px rgba(99, 102, 241, 0.06);
-
-/* Elevated card on hover */
---shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.06),
-                     0 4px 12px rgba(99, 102, 241, 0.12);
-```
-
-### Dark Mode Shadows
-
-In dark themes, traditional box-shadows are nearly invisible. Use these alternatives:
-- **Border glow**: `border: 1px solid rgba(primary, 0.15)` on hover
-- **Background elevation**: slightly lighter card background on hover
-- **Accent glow**: `box-shadow: 0 0 20px rgba(primary, 0.15)` for featured items
-- **Inner glow**: `box-shadow: inset 0 1px 0 rgba(255,255,255,0.05)` for top edge highlight
-
----
-
-## Border Radius Languages
-
-| Language | Values | When to Use | Example Products |
-|----------|--------|------------|-----------------|
-| Sharp | 2-4px | Fintech, enterprise, data-heavy dashboards | Bloomberg, Reuters |
-| Soft | 8-12px | SaaS, general purpose, balanced | Linear, Notion, Stripe |
-| Rounded | 16-24px | Consumer, social, friendly | Spotify, Instagram |
-| Full | 9999px | Pills, tags, avatars, toggle switches | Any — as accents |
-
-**Consistency rule**: pick one language per project. The only exception is using `rounded-full` for specific elements (avatars, pills, toggles) within a soft or rounded system.
-
-### Common Radius Assignments
-
-```css
---radius-sm: 6px;    /* Inputs, small buttons, badges */
---radius-md: 12px;   /* Cards, modals, medium elements */
---radius-lg: 16px;   /* Large cards, sections, containers */
---radius-xl: 24px;   /* Feature sections, hero elements */
---radius-full: 9999px; /* Pills, avatars, circular buttons */
-```
-
----
-
-## Responsive Breakpoints
-
-### Tailwind Defaults (Recommended)
-
-| Token | Width | Target |
-|-------|-------|--------|
-| sm | 640px | Large phones (landscape) |
-| md | 768px | Tablets (portrait) |
-| lg | 1024px | Small laptops, tablets (landscape) |
-| xl | 1280px | Standard desktops |
-| 2xl | 1536px | Large / ultra-wide displays |
-
-### Common Responsive Transformation Patterns
-
-```
-Grid columns:      4 → 3 → 2 → 1
-Card layouts:      3-col → 2-col → 1-col stack
-Pricing cards:     3 side-by-side → 3 stacked
-Navigation:        full horizontal → hamburger drawer (< 768px)
-Side-by-side:      row → column stack (< 768px)
-Sidebar dashboard: visible → collapsible drawer (< 1024px)
-Section padding:   128px → 80px → 48px
-Font display:      72px → 48px → 32px
-Hero layout:       text + visual side-by-side → stacked
-Logo bar:          single row → 2 rows or carousel
-Feature grid:      3-col alternating → single column
-```
-
-### Responsive Typography Scale
-
-```css
-/* Mobile → Desktop fluid scaling */
-.display { font-size: clamp(2rem, 1rem + 3.76vw, 4.5rem); }
-.h1      { font-size: clamp(1.75rem, 1rem + 2.5vw, 3rem); }
-.h2      { font-size: clamp(1.5rem, 1rem + 1.67vw, 2.25rem); }
-.body    { font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1.125rem); }
-```
-
----
-
-## Animation Patterns
-
-### Scroll Reveal (Intersection Observer)
-
-```javascript
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('revealed');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
-```
-
-```css
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.reveal-on-scroll.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* Stagger children */
-.reveal-on-scroll:nth-child(2) { transition-delay: 0.1s; }
-.reveal-on-scroll:nth-child(3) { transition-delay: 0.2s; }
-.reveal-on-scroll:nth-child(4) { transition-delay: 0.3s; }
-```
-
-### Framer Motion Patterns (React)
-
-```tsx
-// Fade-up entrance
-<motion.div
-  initial={{ opacity: 0, y: 24 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true, margin: "-50px" }}
-  transition={{ duration: 0.6, ease: "easeOut" }}
->
-
-// Staggered children
-<motion.div variants={container} initial="hidden" whileInView="visible">
-  {items.map(item => (
-    <motion.div key={item.id} variants={child}>
-      {item.content}
-    </motion.div>
-  ))}
-</motion.div>
-
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } }
-};
-const child = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-};
-```
-
-### Hover Micro-interactions
-
-```css
-/* Card lift + glow */
-.card {
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-}
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.12);
-}
-
-/* Button scale + glow */
-.btn-primary {
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
-}
-.btn-primary:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-}
-.btn-primary:active {
-  transform: scale(0.98);
-}
-
-/* Link underline reveal */
-.nav-link {
-  position: relative;
-}
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--accent-primary);
-  transition: width 0.3s ease-out;
-}
-.nav-link:hover::after {
-  width: 100%;
-}
-```
-
-### Reduced Motion
-
-```css
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  .reveal-on-scroll {
-    opacity: 1;
-    transform: none;
-  }
-}
-```
-
----
-
-## Premium Design Recipes (2025-2026)
-
-### Bento Grid Layout
-
-```css
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(200px, auto);
-  gap: 16px;
-}
-.bento-grid .featured {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-.bento-grid .wide {
-  grid-column: span 2;
-}
-@media (max-width: 768px) {
-  .bento-grid {
-    grid-template-columns: 1fr;
-  }
-  .bento-grid .featured,
-  .bento-grid .wide {
-    grid-column: span 1;
-    grid-row: span 1;
-  }
-}
-```
-
-### Noise/Grain Texture Overlay
-
-```css
-.grain-overlay::before {
+/* Global grain overlay — add to body or :root */
+body::after {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: 9999;
   pointer-events: none;
-  opacity: 0.03;
+  z-index: 9999;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-```
-
-### Magnetic Button Effect (CSS + JS)
-
-```css
-.btn-magnetic {
-  transition: transform 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-```
-
-```javascript
-document.querySelectorAll('.btn-magnetic').forEach(btn => {
-  btn.addEventListener('mousemove', (e) => {
-    const rect = btn.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
-  });
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = 'translate(0, 0)';
-  });
-});
-```
-
-### Animated Gradient Mesh Background
-
-```css
-.gradient-mesh {
-  background:
-    radial-gradient(at 40% 20%, rgba(99,102,241,0.15) 0%, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(139,92,246,0.1) 0%, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(59,130,246,0.08) 0%, transparent 50%),
-    radial-gradient(at 80% 50%, rgba(168,85,247,0.06) 0%, transparent 50%),
-    #050510;
-  animation: meshShift 20s ease-in-out infinite alternate;
-}
-@keyframes meshShift {
-  0%   { background-position: 0% 0%, 100% 0%, 0% 100%, 100% 100%; }
-  100% { background-position: 100% 100%, 0% 100%, 100% 0%, 0% 0%; }
-}
-```
-
-### Spotlight Cursor Effect
-
-```css
-.spotlight-container {
-  position: relative;
-  overflow: hidden;
-}
-.spotlight-container::after {
-  content: '';
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.3s;
-  opacity: 0;
-}
-.spotlight-container:hover::after {
-  opacity: 1;
-}
+/* Use opacity 0.025–0.045. Higher = more visible, lower = subtle warmth */
 ```
 
 ---
 
-## Liquid Glass System (v2.0 — Replaces Glassmorphism)
-
-Liquid Glass is the 2025–2026 evolution of glassmorphism. It adds:
-- Multi-layer gradient backgrounds for depth
-- Inner top highlight (light source simulation)
-- Outer ring subtle border
-- Higher saturation in the blur (`saturate(180%)`)
-
-### CSS Implementations
-
-**Standard (dark themes):**
-```css
-.liquid-glass {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  );
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),   /* top inner highlight */
-    inset 0 -1px 0 rgba(0, 0, 0, 0.10),          /* bottom inner shadow */
-    0 8px 32px rgba(0, 0, 0, 0.30),              /* outer shadow */
-    0 0 0 1px rgba(255, 255, 255, 0.04);         /* outer ring */
-}
-.liquid-glass:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.04) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.20),
-    0 12px 40px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
-  transition: all 250ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-```
-
-**Light mode (softer):**
-```css
-.liquid-glass-light {
-  background: rgba(255, 255, 255, 0.80);
-  backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(0, 0, 0, 0.07);
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.05),
-    0 8px 24px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.90);
-}
-```
-
-**Warm tint (agencies/creative):**
-```css
-.liquid-glass-warm {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 200, 120, 0.07) 0%,
-    rgba(255, 200, 120, 0.01) 100%
-  );
-  backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgba(255, 200, 120, 0.12);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 200, 120, 0.12),
-    0 8px 32px rgba(0, 0, 0, 0.40);
-}
-```
-
-**Tailwind shorthand:**
-```html
-<!-- Standard dark -->
-<div class="bg-white/5 backdrop-blur-2xl saturate-150 border border-white/10
-            shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.3)]
-            hover:bg-white/8 hover:border-white/15 transition-all duration-250">
-
-<!-- Featured/accent tint (pricing, hero cards) -->
-<div class="bg-indigo-500/8 backdrop-blur-2xl saturate-150
-            border border-indigo-500/20
-            shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_32px_rgba(99,102,241,0.12)]">
-```
-
-### When to Use Liquid Glass
-
-| Element | Use Liquid Glass? |
-|---------|------------------|
-| Fixed navbar | ✅ Always |
-| Pricing cards | ✅ Yes |
-| Feature cards | ✅ Yes |
-| Eyebrow badges | ✅ Yes |
-| Logo pills (marquee) | ✅ Yes |
-| Modals / dialogs | ✅ Yes |
-| Page background | ❌ No — plain background color |
-| Body text containers | ❌ No — hurts readability |
-| Main content sections | ❌ No — use solid surface color |
-
----
-
-## HSL Token System (Mandatory in v2.0)
-
-HSL tokens are required over hex because they enable opacity manipulation:
-`hsl(var(--primary) / 0.15)` — impossible with hex, trivial with HSL.
-
-### Complete Token Blueprint
+## 8. Logo Marquee — Full Implementation
 
 ```css
-:root {
-  /* ── All values in H S% L% format ──────────────── */
-
-  /* Backgrounds (darkest to lightest for dark themes) */
-  --background:       240 10%  4%;  /* page canvas */
-  --surface:          240  6%  8%;  /* card/panel level */
-  --surface-hover:    240  6% 11%;  /* surface on hover */
-  --surface-active:   240  6% 14%;  /* pressed/active surface */
-
-  /* Foreground (text) */
-  --foreground:        40  5% 96%;  /* primary text */
-  --foreground-muted:  240  4% 65%; /* secondary text */
-  --foreground-dim:    240  4% 45%; /* tertiary / disabled */
-
-  /* Brand primary */
-  --primary:          262 83% 58%;  /* main CTA color */
-  --primary-hover:    262 83% 65%;  /* on hover */
-  --primary-active:   262 83% 50%;  /* on press */
-
-  /* Border */
-  --border:           240  4% 18%;  /* default border */
-  --border-strong:    240  4% 26%;  /* emphasized border */
-  --border-subtle:    240  4% 12%;  /* very faint divider */
-
-  /* Semantic */
-  --success:  142 76% 36%;
-  --warning:   38 92% 50%;
-  --error:      0 84% 60%;
-  --info:      217 91% 60%;
-
-  /* Typography */
-  --font-sans:    'Inter', system-ui, sans-serif;
-  --font-mono:    'JetBrains Mono', monospace;
-  --font-display: 'Cabinet Grotesk', sans-serif;
-
-  /* Radius scale */
-  --radius-xs:   0.25rem;   /* 4px */
-  --radius-sm:   0.375rem;  /* 6px */
-  --radius:      0.75rem;   /* 12px */
-  --radius-lg:   1rem;      /* 16px */
-  --radius-xl:   1.5rem;    /* 24px */
-  --radius-2xl:  2rem;      /* 32px */
-  --radius-full: 9999px;
-
-  /* Motion */
-  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-out:      cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-instant:   100ms;
-  --dur-fast:      150ms;
-  --dur-base:      250ms;
-  --dur-slow:      400ms;
-  --dur-slower:    600ms;
+@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+@keyframes marquee-rev { from { transform: translateX(-50%) } to { transform: translateX(0) } }
+.animate-marquee     { animation: marquee 24s linear infinite; }
+.animate-marquee-rev { animation: marquee-rev 24s linear infinite; }
+.marquee-fade        {
+  mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
 }
-```
-
-### Usage in Components
-
-```css
-/* ✅ Correct — uses tokens */
-.card {
-  background: hsl(var(--surface));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  color: hsl(var(--foreground));
-  transition: background var(--dur-base) var(--ease-out);
-}
-.card:hover {
-  background: hsl(var(--surface-hover));
-}
-
-/* ✅ Correct — HSL opacity manipulation */
-.glow {
-  box-shadow: 0 0 24px hsl(var(--primary) / 0.3);
-}
-.tinted-bg {
-  background: hsl(var(--primary) / 0.08);
-}
-
-/* ❌ Wrong — hardcoded values */
-.card {
-  background: #0f0f23;  /* never */
-  border: 1px solid rgba(255,255,255,0.1);  /* token it */
-  border-radius: 12px;  /* use var(--radius) */
-}
-```
-
-### Tailwind + CSS Tokens Integration
-
-```js
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        background: 'hsl(var(--background) / <alpha-value>)',
-        surface: 'hsl(var(--surface) / <alpha-value>)',
-        foreground: 'hsl(var(--foreground) / <alpha-value>)',
-        'foreground-muted': 'hsl(var(--foreground-muted) / <alpha-value>)',
-        primary: 'hsl(var(--primary) / <alpha-value>)',
-        border: 'hsl(var(--border) / <alpha-value>)',
-      },
-      borderRadius: {
-        sm:   'var(--radius-sm)',
-        DEFAULT: 'var(--radius)',
-        lg:   'var(--radius-lg)',
-        xl:   'var(--radius-xl)',
-        '2xl': 'var(--radius-2xl)',
-      },
-      transitionTimingFunction: {
-        'spring':   'var(--ease-spring)',
-        'out':      'var(--ease-out)',
-        'out-expo': 'var(--ease-out-expo)',
-      },
-      transitionDuration: {
-        fast:   'var(--dur-fast)',
-        base:   'var(--dur-base)',
-        slow:   'var(--dur-slow)',
-        slower: 'var(--dur-slower)',
-      }
-    }
-  }
-}
-```
-
----
-
-## Logo Marquee — Complete Implementation
-
-### Pure CSS Version (no JS)
-
-```css
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes marquee-reverse {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
-.animate-marquee         { animation: marquee 24s linear infinite; }
-.animate-marquee-reverse { animation: marquee-reverse 24s linear infinite; }
-.animate-marquee-fast    { animation: marquee 16s linear infinite; }
-
-/* Fade edges */
-.marquee-container {
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 15%,
-    black 85%,
-    transparent 100%
-  );
-}
-
-/* Pause on hover */
 .animate-marquee:hover { animation-play-state: paused; }
 ```
 
 ```jsx
-// React component
-function LogoMarquee({ logos, speed = 24, reverse = false }) {
-  const doubled = [...logos, ...logos]; // seamless loop
+// React
+function Marquee({ items, speed = 24, reverse = false }) {
   return (
-    <div className="overflow-hidden marquee-container py-4">
-      <div className={`flex gap-8 whitespace-nowrap
-                       ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
+    <div className="overflow-hidden marquee-fade py-4">
+      <div className={`flex gap-8 whitespace-nowrap ${reverse ? 'animate-marquee-rev' : 'animate-marquee'}`}
            style={{ animationDuration: `${speed}s` }}>
-        {doubled.map((logo, i) => (
-          <div key={i} className="liquid-glass rounded-full px-5 py-2.5
-                                   inline-flex items-center gap-2.5 shrink-0
-                                   text-foreground/55 text-sm font-medium">
-            <span className="w-5 h-5 rounded-full bg-foreground/10" /> {/* icon placeholder */}
-            {logo}
+        {[...items, ...items].map((item, i) => (
+          <div key={i} className="liquid-glass rounded-full px-5 py-2 shrink-0 text-fg/55 text-sm font-medium">
+            {item}
           </div>
         ))}
       </div>
@@ -937,42 +555,61 @@ function LogoMarquee({ logos, speed = 24, reverse = false }) {
 
 ---
 
-## Video Hero — Complete Implementation
+## 9. Spacing & Responsive Scales
 
-```jsx
-function VideoHero({ src, children }) {
-  return (
-    <section className="relative min-h-screen overflow-hidden flex flex-col">
-      {/* Video layer — always lowest */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover object-center"
-        src={src}
-      />
+### 4px Spacing Scale
 
-      {/* Top gradient — blends into navbar */}
-      <div className="absolute inset-0 bg-gradient-to-b
-                      from-background via-background/20 to-background
-                      pointer-events-none" />
-
-      {/* Optional: vignette edges */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,hsl(var(--background)/0.6)_100%)]
-                      pointer-events-none" />
-
-      {/* Content — always z-10 */}
-      <div className="relative z-10 flex flex-col flex-1">
-        {children}
-      </div>
-    </section>
-  );
-}
+```
+4px  (1)  — icon-label gap
+8px  (2)  — inline elements
+12px (3)  — button internal padding
+16px (4)  — standard content gap
+24px (6)  — card internal padding
+32px (8)  — between card groups
+40px (10) — between subsections
+48px (12) — section padding (mobile)
+64px (16) — section padding (tablet)
+80px (20) — section padding (desktop)
+96px (24) — generous section padding
+128px(32) — hero/feature padding
 ```
 
-**Video tips:**
-- Target ≤ 4MB for fast loading (compress with HandBrake or FFmpeg)
-- Always provide a static `poster` fallback image for slow connections
-- Use `object-position: center top` for portrait-heavy footage
-- Test with video disabled — gradient background must look good standalone
+### Responsive Patterns
+
+| Pattern | Desktop | Tablet | Mobile |
+|---------|---------|--------|--------|
+| Grid columns | 4 | 2 | 1 |
+| Section padding | 96–128px | 64–80px | 48–64px |
+| Display type | 80–120px | 56–72px | 40–52px |
+| Card padding | 32–40px | 24–32px | 20–24px |
+| Nav | Full | Full | Hamburger |
+| Sidebar | Visible | Collapsible | Drawer |
+
+---
+
+## 10. Accessibility Tokens (WCAG 2.1 AA)
+
+```css
+/* Verify contrast: text on background */
+/* Body text: min 4.5:1. Large text (18px+ bold, 24px+): min 3:1 */
+/* Focus ring: min 3:1 against adjacent colors */
+:root {
+  --focus-ring: 0 0 0 3px oklch(62% 0.21 285 / 0.5);
+}
+*:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--surface);
+  padding: 0.5rem 1rem;
+  z-index: 9999;
+  border-radius: var(--r);
+}
+.skip-link:focus { top: 1rem; }
+```

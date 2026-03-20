@@ -1,196 +1,192 @@
-# Modern Frontend Skill
+# Modern Frontend Design — v3.0 (2026 Edition)
 
-A skill for coding agents that transforms vague UI requests into polished,
-production-quality frontends. Instead of generating generic Bootstrap-looking
-layouts, the agent thinks like a senior designer **and** a MotionSites-level prompt engineer
-— planning a complete token system, building Liquid Glass components, and
-specifying every animation with pixel-precise detail.
+A skill for coding agents that transforms vague UI requests into polished, production-quality
+frontends. v3.0 is the first edition built specifically for 2026's design landscape: OKLCH
+color tokens, native CSS scroll-driven animations, Liquid Glass surfaces, View Transitions,
+CSS Anchor Positioning, `@starting-style` enters, and niche-aware AI Minimalism vs
+Neo-Brutalism design direction.
 
-## What's New in v2.0
+[![CI](https://github.com/deveshpunjabi/modern-frontend-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/deveshpunjabi/modern-frontend-skill/actions)
 
-| Feature | v1.0 | v2.0 |
-|---------|------|------|
-| Design system | Optional | **Mandatory CSS :root tokens (Step 0)** |
-| Color format | Hex values | **HSL tokens (opacity manipulation)** |
-| Glass effect | Glassmorphism | **Liquid Glass (inner glow, multi-layer)** |
-| Hero patterns | Generic | **4 cinematic patterns (video, mesh, bento, oversized type)** |
-| Animation spec | General guidance | **Per-element: property + duration + easing + delay** |
-| Prompt templates | None | **6 MotionSites-quality hero prompt templates** |
-| Eval cases | 5 cases, 66 assertions | **7 cases, 135 assertions** |
-| Steps | 11-step process | **12-step process (Step 0 = tokens first)** |
+## What's New in v3.0 (2026)
+
+| Feature | v2.0 | v3.0 (2026) |
+|---------|------|-------------|
+| Color format | HSL tokens | **OKLCH — Baseline 2026, perceptual uniformity** |
+| Scroll animations | Framer / Intersection Observer | **Native CSS `animation-timeline: view()`** |
+| Enter animations | Framer initial/animate | **`@starting-style` — flash-free, no JS** |
+| Page transitions | Manual | **`@view-transition { navigation: auto }`** |
+| Tooltips | Floating UI / Popper.js | **CSS Anchor Positioning** |
+| Staggered animations | JS delays | **`sibling-index()` CSS function** |
+| Grid layouts | Manual JS masonry | **Native CSS Grid Lanes / masonry** |
+| AI aesthetic | Generic glow | **AI Minimalism — restrained, Perplexity/OpenAI style** |
+| Color vocabulary | 2 niches | **5 aesthetics: AI Minimalism, Technical Mono, Neo-Brutalism, Organic, Cinematic** |
+| Evals | 7 cases / 108 assertions | **7 cases / 129 assertions** |
+| CI | ✅ | **✅ 13/13 tests** |
+
+## The 2026 Paradigm Shift
+
+After years of everyone copying the same "dark purple glow" SaaS aesthetic, 2026 splits into
+distinct visual languages:
+
+| Aesthetic | Products | Visual Signature |
+|-----------|----------|-----------------|
+| **AI Minimalism** | Perplexity, Claude, OpenAI | Aggressive whitespace, single font, barely-there UI |
+| **Technical Mono** | Terminal-style dev tools | Monospace, dark green, code blocks, zero decoration |
+| **Cinematic** | SaaS marketing, AI startups | Video heroes, liquid glass, oversized type, marquees |
+| **Neo-Brutalism** | Agencies, art projects, edgy brands | Zero radius, stark borders, offset shadows, bold type |
+| **Organic** | Wellness, agencies, portfolios | Earthy OKLCH, soft curves, blob backgrounds, grain |
+
+The skill detects which aesthetic fits the product niche and applies it correctly.
 
 ## How It Works
 
-When you ask your coding agent to "build me a landing page" or "create a dashboard", the skill
-automatically kicks in. It follows a **12-step Atom of Thought Design Process**:
+Ask your agent: *"Build a cinematic landing page for my AI startup Nimbus."*
 
-0. **Design Token System** — defines complete `:root` CSS variables (HSL format) before any component
-1. **Understand the Product** — extracts type, audience, value prop, conversion goal
-2. **Visual Inspiration** — references cinematic hero patterns and 2025–2026 trends
-3. **Visual System Planning** — typography pairings, HSL palette, spacing scale, radius language
-4. **Layout Architecture** — section hierarchy mapped before coding
-5. **UI Component System** — modular, prop-driven, liquid-glass-aware components
-6. **Motion & Interaction Design** — per-element animation specs with easing curves
-7. **Technology Stack** — right tools for the project
-8. **Backend Awareness** — loading, error, empty states; realistic data
-9. **Responsive System** — pixel-perfect at 375px, 768px, and 1440px
-10. **Visual Quality Validation** — checklist including token compliance audit
-11. **Hero Prompt Engineering** — MotionSites-style precise prompt spec output
-12. **Final Testing** — build verification, lint, runtime smoke test, component scan
+The skill runs a **12-step Atom of Thought Design Process**:
+
+0. **OKLCH Token System** — complete :root variables before any component
+1. **Product Understanding** — type, audience, value prop, conversion goal
+2. **2026 Visual Research** — 5 hero patterns, aesthetic selection, trend application
+3. **Visual System** — OKLCH palette, variable font pairing, spacing scale, radius
+4. **Layout Architecture** — section structure mapped before coding
+5. **Component System** — liquid-glass surfaces, anchor-based tooltips
+6. **2026 Motion System** — native CSS scroll-driven, `@starting-style`, View Transitions
+7. **Technology Stack** — Next.js 15, Tailwind v4, TypeScript baseline
+8. **Backend + Performance** — RSC, Core Web Vitals, sustainable design
+9. **Responsive + Accessible** — WCAG 2.1 AA baked in, not afterthought
+10. **Quality Validation** — OKLCH token audit, 2026 CSS feature checklist
+11. **Hero Prompt Engineering** — MotionSites-style precise spec output
+12. **Final Testing** — build, lint, runtime, component scan, hex audit
 
 ## What's Inside
 
-### Core Skill
-- **SKILL.md** — 698-line, 12-step process with full liquid glass recipes, HSL token system,
-  cinematic hero patterns, and hero prompt engineering guide
-
-### Design References
-- **references/design-systems.md** — 978-line reference: typography, palettes, gradients, liquid glass,
-  HSL tokens, logo marquee implementation, video hero implementation, animation patterns
-- **references/hero-prompts.md** *(new)* — 6 production-ready MotionSites-style hero prompt templates:
-  1. AI SaaS (dark, indigo/purple, video background)
-  2. Developer Tool (dark, green terminal, code block)
-  3. Fintech (light, professional blue, dashboard mockup)
-  4. Creative Agency (warm dark, editorial typography)
-  5. Wellness App (soft light, phone mockup, blob background)
-  6. SaaS Pricing Page (dark, interactive monthly/yearly toggle)
-
-### Evaluations
-- **evals/evals.json** — 7 test cases, 135 total assertions covering:
-  token compliance, liquid glass, hero patterns, motion spec, niche-specific design
-
-## Niche-Aware Design Table
-
-| Niche | Design Direction |
-|-------|-----------------|
-| AI / ML tools | Dark, glowing indigo/purple accents, video or mesh hero |
-| Developer tools | Dark green terminal aesthetic, monospace, code blocks |
-| Fintech | Light, professional blue, trust-heavy, two-column hero |
-| Cybersecurity | Dark, terminal-style, alert-driven, status indicators |
-| Creative agencies | Warm dark, editorial typography, grain texture, Awwwards-level |
-| SaaS dashboards | Sidebar nav, metric cards, neutral palette, token-compliant |
-| E-commerce | Product grids, prominent CTAs, light mode, trust badges |
-| Social platforms | Vibrant, rounded, avatar-centric, card feeds |
-| Health / Wellness | Soft light, sage palette, phone mockup, blob backgrounds |
-| Education | Structured, friendly, progress indicators, accessible |
-| Startups / Landing | Hero-driven, social proof, bento features, pricing |
-| Consulting / B2B | Authority-driven, dark premium, numbered value props |
-
-## Anti-Patterns Prevented
-
-| Anti-Pattern | Fix |
-|-------------|-----|
-| Hardcoded hex in components | All `hsl(var(--token))` — zero exceptions |
-| Flat glassmorphism (2021-era) | Liquid Glass: inner glow, multi-layer blur |
-| Rainbow soup | Primary + neutral + 1-2 accents maximum |
-| Wall of cards | Bento layout, varied sizes, visual weight |
-| Generic Bootstrap look | Design from the token system up |
-| Vague animations | Per-element: property + duration + easing + delay |
-| Lorem ipsum | Realistic product copy, always |
-| Typography neglect | Display → h1 → h2 → body hierarchy enforced |
-
-## Project Structure
-
 ```
 modern-frontend-skill/
-├── skills/
-│   └── modern-frontend-design/
-│       ├── SKILL.md                          # 12-step process, 698 lines
-│       ├── references/
-│       │   ├── design-systems.md             # 978-line reference guide
-│       │   └── hero-prompts.md               # 6 MotionSites-style templates
-│       └── evals/
-│           └── evals.json                    # 7 test cases, 135 assertions
-├── examples/
-│   ├── README.md
-│   ├── landing-page.json
-│   ├── dashboard.json
-│   ├── ai-support-landing.json
-│   └── pricing-page.json
+├── skills/modern-frontend-design/
+│   ├── SKILL.md                     # 598-line 12-step process — CI validated ✓
+│   ├── references/
+│   │   ├── design-systems.md        # 615-line: OKLCH palettes, liquid glass,
+│   │   │                            #   2026 CSS features, neo-brutalism recipes,
+│   │   │                            #   gradient/glow, marquee, grain, a11y
+│   │   └── hero-prompts.md          # 431-line: 6 MotionSites-quality templates
+│   └── evals/
+│       └── evals.json               # 7 cases · 129 assertions
 ├── scripts/
-│   ├── validate_skill.py
-│   └── run_evals.py
+│   ├── validate_skill.py            # CI validator — enforces ≤600 line limit
+│   └── run_evals.py                 # Eval summary printer
 ├── tests/
-│   ├── test_validate_skill.py
-│   └── test_evals.py
+│   ├── test_validate_skill.py       # 6 tests
+│   └── test_evals.py                # 7 tests — 13 total
+├── examples/
+│   └── README.md                    # 6 calibrated prompt examples
 ├── docs/
-│   └── SKILL-GUIDE.md
-├── CONTRIBUTING.md
-├── LICENSE
+│   └── SKILL-GUIDE.md               # Customization guide
+├── .github/workflows/ci.yml         # CI: validate + evals + pytest
 └── README.md
 ```
 
-## Installation
+## 2026 Niche Design Table
 
-### Claude Code
+| Niche | Aesthetic | Primary Color | Hero Pattern |
+|-------|-----------|--------------|--------------|
+| AI / ML tools | AI Minimalism | OKLCH neutral or indigo | B (minimal) or A (cinematic) |
+| Developer tools | Technical Mono | OKLCH green | Code block terminal |
+| Fintech | Professional light | OKLCH deep blue | Two-column + dashboard card |
+| Cybersecurity | Dark terminal | OKLCH green or red | Status-driven |
+| Creative agencies | Neo-Brutalism | Warm OKLCH copper | D (editorial type) |
+| SaaS dashboards | Cinematic | OKLCH indigo | Bento grid |
+| E-commerce (lifestyle) | Dopamine | Vivid OKLCH chroma | Product grid |
+| Health / Wellness | Organic | OKLCH sage/earthy | Blob bg + phone mockup |
+| Portfolios | Neo-Brutal or Organic | Niche-dependent | Asymmetric |
+| Startups | Cinematic | OKLCH indigo/purple | Video + marquee |
+| B2B / Consulting | Premium dark | OKLCH muted | Authority-driven |
 
-```
-npx skills add deveshpunjabi/modern-frontend-skill
-```
+## Anti-Patterns — 2026 Edition
 
-### Cursor
-
-Copy the `skills/modern-frontend-design/` folder into your project's `.cursor/skills/` directory.
-
-### Windsurf / Cline / Codex
-
-Copy the `skills/modern-frontend-design/` folder into the equivalent skills directory.
-
-### Aider
-
-```yaml
-# .aider.conf
-read: path/to/skills/modern-frontend-design/SKILL.md
-```
-
-### Any Agent
-
-Copy `skills/modern-frontend-design/SKILL.md` into your agent's skill/instruction directory.
-Optionally include `references/` for deeper reference material.
-
-### Verify It Works
-
-Start a new session and ask:
-
-> "Build me a cinematic landing page for my AI startup 'Nimbus'. Dark theme, video background hero, indigo/purple palette."
-
-The agent should: define `:root` HSL tokens → implement liquid glass utility → build the hero with video background + animated marquee → specify per-element animation timing → validate token compliance before finishing.
+| Anti-Pattern | Why It Fails in 2026 | Fix |
+|-------------|---------------------|-----|
+| HSL/hex colors | Perceptual non-uniformity, no relative color syntax | OKLCH everywhere |
+| JS scroll listeners for animation | Blocks main thread, needs library | `animation-timeline: view()` |
+| Flash of final state on modals | Jarring, amateur feel | `@starting-style` |
+| Floating UI / Popper.js for tooltips | Unnecessary dependency | CSS Anchor Positioning |
+| "Purple glow on dark" for every AI app | Overdone, AI Minimalism has won | Choose your aesthetic intentionally |
+| JS stagger with timeouts | Fragile, unnecessary | `sibling-index()` or CSS delay calc |
+| Lorem ipsum copy | Can't judge real design | Write realistic product copy always |
+| Accessibility as afterthought | Legal risk, bad UX, fails WCAG | OKLCH contrast tokens baked in |
+| Ignoring RSC in Next.js 15 | Heavy client bundle, slow LCP | Static content → RSC default |
 
 ## Test Cases
 
-| # | Scenario | Stack | Key Checks |
-|---|---------|-------|-----------|
-| 1 | AI SaaS landing (Lumina) | React + Framer | Tokens, video hero, liquid glass, marquee, gradient text |
-| 2 | Dev tool hero (Axiom) | React + Tailwind | Terminal aesthetic, code block, green primary, monospace |
-| 3 | Fintech landing (Clearpath) | Next.js | Light mode, two-column, dashboard card, trust signals |
-| 4 | Wellness app (Bloom) | React + Framer | Soft palette, phone mockup, blobs, warm copy |
-| 5 | SaaS pricing page (Forma AI) | React | Toggle animation, liquid glass cards, FAQ accordion |
-| 6 | Creative agency (Forma Studio) | React | Editorial type, warm dark, grain texture, Awwwards-level |
-| 7 | Dashboard homepage | Next.js | Full token audit, sidebar, charts, loading states |
+| # | Scenario | Stack | Key 2026 Focus |
+|---|---------|-------|----------------|
+| 1 | AI SaaS landing (Lumina AI) | Next.js + Framer | OKLCH, video hero, scroll-driven, @starting-style |
+| 2 | Fintech dashboard (Clearpath) | Next.js | OKLCH light, Container scroll-state, RSC |
+| 3 | Designer portfolio (Aria Chen) | HTML/CSS/JS | OKLCH, animation-timeline, no frameworks |
+| 4 | Dev tool hero (Axiom) | React | OKLCH green, sibling-index(), terminal |
+| 5 | SaaS pricing (Forma AI) | React + Framer | OKLCH, layoutId toggle, @starting-style FAQ |
+| 6 | Agency hero (Forma Studio) | React + GSAP | Neo-brutalism, zero radius, GSAP character |
+| 7 | PM dashboard token audit | Next.js | Full OKLCH audit — zero hex proof |
 
-7 test cases · 135 total assertions
+7 evals · 129 assertions · CI: 13/13 tests ✅
+
+## Installation
+
+```bash
+# Claude Code
+npx skills add deveshpunjabi/modern-frontend-skill
+
+# Cursor
+cp -r skills/modern-frontend-design .cursor/skills/
+
+# Windsurf / Cline
+cp -r skills/modern-frontend-design .<agent>/skills/
+
+# Any agent
+cp skills/modern-frontend-design/SKILL.md <agent-skills-dir>/
+```
+
+## Verify It Works
+
+In a new session, ask:
+
+> "Build a cinematic hero for my AI startup 'Nimbus'. Dark OKLCH indigo, video background,
+> native CSS scroll-driven animations, liquid glass, and @starting-style on the CTA modal."
+
+The agent should: define OKLCH :root tokens → add .liquid-glass utility → build video hero
+→ use `animation-timeline: view()` for reveals → add `@starting-style` → include
+`@view-transition` → add grain texture → specify per-element animation timing.
+
+## Scripts
+
+```bash
+# Validate SKILL.md (required to pass CI)
+python scripts/validate_skill.py skills/modern-frontend-design/SKILL.md
+# → ✓ valid
+
+# View eval summary
+python scripts/run_evals.py skills/modern-frontend-design/evals/evals.json
+# → 7 evals, 129 assertions
+
+# Run all 13 tests
+python -m pytest tests/ -v
+# → 13 passed
+```
 
 ## Philosophy
 
-- **Tokens-first** — design system defined before any component code
-- **HSL over hex** — enables opacity manipulation; `hsl(var(--primary) / 0.15)` is the norm
-- **Liquid Glass** — the standard floating surface treatment in 2025+
-- **Motion as material** — per-element animation specs, not vague "add animations"
-- **Cinematic heroes** — video backgrounds, oversized type, logo marquees are first-class
-- **Niche-aware** — every industry has visual conventions; violating them breaks trust
-- **Prompt engineering** — the skill teaches agents to output MotionSites-quality prompt specs
-- **Framework-agnostic** — the thinking matters more than the tools
-- **Backend-ready** — loading states, error handling, real data integration
+- **OKLCH-first** — perceptually uniform, relative color syntax, Baseline 2026
+- **CSS-native motion** — scroll-driven animations over JS libraries where possible
+- **`@starting-style`** — every modal/drawer/toast has a flash-free enter
+- **View Transitions** — page navigation feels like a native app
+- **Aesthetic intentionality** — AI Minimalism, Technical Mono, Neo-Brutalism, Organic, Cinematic
+- **Liquid Glass** — the 2026 standard for floating surfaces
+- **WCAG baked in** — not a checkbox, a design foundation
+- **RSC-aware** — static by default, client only for interactivity
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-1. Fork the repository
-2. Create a branch for your changes
-3. Follow the token-first patterns in the existing skill
-4. Run `python -m pytest tests/ -v` to verify
-5. Submit a PR
+See [CONTRIBUTING.md](CONTRIBUTING.md). Run `python -m pytest tests/ -v` before PRs.
 
 ## License
 
