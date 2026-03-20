@@ -641,3 +641,338 @@ document.querySelectorAll('.btn-magnetic').forEach(btn => {
   opacity: 1;
 }
 ```
+
+---
+
+## Liquid Glass System (v2.0 — Replaces Glassmorphism)
+
+Liquid Glass is the 2025–2026 evolution of glassmorphism. It adds:
+- Multi-layer gradient backgrounds for depth
+- Inner top highlight (light source simulation)
+- Outer ring subtle border
+- Higher saturation in the blur (`saturate(180%)`)
+
+### CSS Implementations
+
+**Standard (dark themes):**
+```css
+.liquid-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),   /* top inner highlight */
+    inset 0 -1px 0 rgba(0, 0, 0, 0.10),          /* bottom inner shadow */
+    0 8px 32px rgba(0, 0, 0, 0.30),              /* outer shadow */
+    0 0 0 1px rgba(255, 255, 255, 0.04);         /* outer ring */
+}
+.liquid-glass:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: all 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+```
+
+**Light mode (softer):**
+```css
+.liquid-glass-light {
+  background: rgba(255, 255, 255, 0.80);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.05),
+    0 8px 24px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+}
+```
+
+**Warm tint (agencies/creative):**
+```css
+.liquid-glass-warm {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 200, 120, 0.07) 0%,
+    rgba(255, 200, 120, 0.01) 100%
+  );
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 200, 120, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 200, 120, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.40);
+}
+```
+
+**Tailwind shorthand:**
+```html
+<!-- Standard dark -->
+<div class="bg-white/5 backdrop-blur-2xl saturate-150 border border-white/10
+            shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.3)]
+            hover:bg-white/8 hover:border-white/15 transition-all duration-250">
+
+<!-- Featured/accent tint (pricing, hero cards) -->
+<div class="bg-indigo-500/8 backdrop-blur-2xl saturate-150
+            border border-indigo-500/20
+            shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_32px_rgba(99,102,241,0.12)]">
+```
+
+### When to Use Liquid Glass
+
+| Element | Use Liquid Glass? |
+|---------|------------------|
+| Fixed navbar | ✅ Always |
+| Pricing cards | ✅ Yes |
+| Feature cards | ✅ Yes |
+| Eyebrow badges | ✅ Yes |
+| Logo pills (marquee) | ✅ Yes |
+| Modals / dialogs | ✅ Yes |
+| Page background | ❌ No — plain background color |
+| Body text containers | ❌ No — hurts readability |
+| Main content sections | ❌ No — use solid surface color |
+
+---
+
+## HSL Token System (Mandatory in v2.0)
+
+HSL tokens are required over hex because they enable opacity manipulation:
+`hsl(var(--primary) / 0.15)` — impossible with hex, trivial with HSL.
+
+### Complete Token Blueprint
+
+```css
+:root {
+  /* ── All values in H S% L% format ──────────────── */
+
+  /* Backgrounds (darkest to lightest for dark themes) */
+  --background:       240 10%  4%;  /* page canvas */
+  --surface:          240  6%  8%;  /* card/panel level */
+  --surface-hover:    240  6% 11%;  /* surface on hover */
+  --surface-active:   240  6% 14%;  /* pressed/active surface */
+
+  /* Foreground (text) */
+  --foreground:        40  5% 96%;  /* primary text */
+  --foreground-muted:  240  4% 65%; /* secondary text */
+  --foreground-dim:    240  4% 45%; /* tertiary / disabled */
+
+  /* Brand primary */
+  --primary:          262 83% 58%;  /* main CTA color */
+  --primary-hover:    262 83% 65%;  /* on hover */
+  --primary-active:   262 83% 50%;  /* on press */
+
+  /* Border */
+  --border:           240  4% 18%;  /* default border */
+  --border-strong:    240  4% 26%;  /* emphasized border */
+  --border-subtle:    240  4% 12%;  /* very faint divider */
+
+  /* Semantic */
+  --success:  142 76% 36%;
+  --warning:   38 92% 50%;
+  --error:      0 84% 60%;
+  --info:      217 91% 60%;
+
+  /* Typography */
+  --font-sans:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+  --font-display: 'Cabinet Grotesk', sans-serif;
+
+  /* Radius scale */
+  --radius-xs:   0.25rem;   /* 4px */
+  --radius-sm:   0.375rem;  /* 6px */
+  --radius:      0.75rem;   /* 12px */
+  --radius-lg:   1rem;      /* 16px */
+  --radius-xl:   1.5rem;    /* 24px */
+  --radius-2xl:  2rem;      /* 32px */
+  --radius-full: 9999px;
+
+  /* Motion */
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:      cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-instant:   100ms;
+  --dur-fast:      150ms;
+  --dur-base:      250ms;
+  --dur-slow:      400ms;
+  --dur-slower:    600ms;
+}
+```
+
+### Usage in Components
+
+```css
+/* ✅ Correct — uses tokens */
+.card {
+  background: hsl(var(--surface));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  color: hsl(var(--foreground));
+  transition: background var(--dur-base) var(--ease-out);
+}
+.card:hover {
+  background: hsl(var(--surface-hover));
+}
+
+/* ✅ Correct — HSL opacity manipulation */
+.glow {
+  box-shadow: 0 0 24px hsl(var(--primary) / 0.3);
+}
+.tinted-bg {
+  background: hsl(var(--primary) / 0.08);
+}
+
+/* ❌ Wrong — hardcoded values */
+.card {
+  background: #0f0f23;  /* never */
+  border: 1px solid rgba(255,255,255,0.1);  /* token it */
+  border-radius: 12px;  /* use var(--radius) */
+}
+```
+
+### Tailwind + CSS Tokens Integration
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        background: 'hsl(var(--background) / <alpha-value>)',
+        surface: 'hsl(var(--surface) / <alpha-value>)',
+        foreground: 'hsl(var(--foreground) / <alpha-value>)',
+        'foreground-muted': 'hsl(var(--foreground-muted) / <alpha-value>)',
+        primary: 'hsl(var(--primary) / <alpha-value>)',
+        border: 'hsl(var(--border) / <alpha-value>)',
+      },
+      borderRadius: {
+        sm:   'var(--radius-sm)',
+        DEFAULT: 'var(--radius)',
+        lg:   'var(--radius-lg)',
+        xl:   'var(--radius-xl)',
+        '2xl': 'var(--radius-2xl)',
+      },
+      transitionTimingFunction: {
+        'spring':   'var(--ease-spring)',
+        'out':      'var(--ease-out)',
+        'out-expo': 'var(--ease-out-expo)',
+      },
+      transitionDuration: {
+        fast:   'var(--dur-fast)',
+        base:   'var(--dur-base)',
+        slow:   'var(--dur-slow)',
+        slower: 'var(--dur-slower)',
+      }
+    }
+  }
+}
+```
+
+---
+
+## Logo Marquee — Complete Implementation
+
+### Pure CSS Version (no JS)
+
+```css
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.animate-marquee         { animation: marquee 24s linear infinite; }
+.animate-marquee-reverse { animation: marquee-reverse 24s linear infinite; }
+.animate-marquee-fast    { animation: marquee 16s linear infinite; }
+
+/* Fade edges */
+.marquee-container {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 15%,
+    black 85%,
+    transparent 100%
+  );
+}
+
+/* Pause on hover */
+.animate-marquee:hover { animation-play-state: paused; }
+```
+
+```jsx
+// React component
+function LogoMarquee({ logos, speed = 24, reverse = false }) {
+  const doubled = [...logos, ...logos]; // seamless loop
+  return (
+    <div className="overflow-hidden marquee-container py-4">
+      <div className={`flex gap-8 whitespace-nowrap
+                       ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
+           style={{ animationDuration: `${speed}s` }}>
+        {doubled.map((logo, i) => (
+          <div key={i} className="liquid-glass rounded-full px-5 py-2.5
+                                   inline-flex items-center gap-2.5 shrink-0
+                                   text-foreground/55 text-sm font-medium">
+            <span className="w-5 h-5 rounded-full bg-foreground/10" /> {/* icon placeholder */}
+            {logo}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Video Hero — Complete Implementation
+
+```jsx
+function VideoHero({ src, children }) {
+  return (
+    <section className="relative min-h-screen overflow-hidden flex flex-col">
+      {/* Video layer — always lowest */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        src={src}
+      />
+
+      {/* Top gradient — blends into navbar */}
+      <div className="absolute inset-0 bg-gradient-to-b
+                      from-background via-background/20 to-background
+                      pointer-events-none" />
+
+      {/* Optional: vignette edges */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,hsl(var(--background)/0.6)_100%)]
+                      pointer-events-none" />
+
+      {/* Content — always z-10 */}
+      <div className="relative z-10 flex flex-col flex-1">
+        {children}
+      </div>
+    </section>
+  );
+}
+```
+
+**Video tips:**
+- Target ≤ 4MB for fast loading (compress with HandBrake or FFmpeg)
+- Always provide a static `poster` fallback image for slow connections
+- Use `object-position: center top` for portrait-heavy footage
+- Test with video disabled — gradient background must look good standalone
