@@ -1,4 +1,4 @@
-# Modern Frontend Design
+# Modern Frontend Skills
 
 A skill for coding agents that transforms vague UI requests into polished,
 production-quality frontends. Instead of generating generic Bootstrap-looking
