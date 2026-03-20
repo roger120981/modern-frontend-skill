@@ -1,4 +1,4 @@
-# Modern Frontend Design — v3.0 (2026 Edition)
+# Modern Frontend Design 
 
 A skill for coding agents that transforms vague UI requests into polished, production-quality
 frontends. v3.0 is the first edition built specifically for 2026's design landscape: OKLCH
@@ -6,7 +6,6 @@ color tokens, native CSS scroll-driven animations, Liquid Glass surfaces, View T
 CSS Anchor Positioning, `@starting-style` enters, and niche-aware AI Minimalism vs
 Neo-Brutalism design direction.
 
-[![CI](https://github.com/deveshpunjabi/modern-frontend-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/deveshpunjabi/modern-frontend-skill/actions)
 
 ## What's New in v3.0 (2026)
 
